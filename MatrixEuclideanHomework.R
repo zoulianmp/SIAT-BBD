@@ -6,7 +6,10 @@ dimension <- dim(egDataMatrix)
 
 dataMatrix <- egDataMatrix[,2:dimension[2]]
 
+samplenames <- dimnames(dataMatrix)[[2]]
 
+
+  
 minmaxindex<-minmaxEuclideanDistance(dataMatrix)
 
 minleft<-minmaxindex[1]
@@ -17,9 +20,16 @@ maxright<-minmaxindex[4]
 
 ## plot
 par(mfrow=c(1,2))
-plot(egDataMatrix[,minleft], egDataMatrix[,minright])
+plot( egDataMatrix[,minleft],egDataMatrix[,minright],
+     main = "The Minimum of Euclidean Distaces" ,  
+     xlab = samplenames[minleft], ylab = samplenames[minright])
+
+
 abline(0,1)
-plot(egDataMatrix[,maxleft], egDataMatrix[,maxright])
+plot(egDataMatrix[,maxleft], egDataMatrix[,maxright],
+     main = "The Maximum of Euclidean Distaces" ,  
+     xlab = samplenames[maxleft], ylab = samplenames[maxright])
+
 abline(0,1)
 
 par(mfrow=c(1,1))
