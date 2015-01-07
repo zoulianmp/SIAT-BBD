@@ -1,22 +1,34 @@
 
 
+x3 <- c(3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5)
+x4 <- c(3, 1, 3, 1, 5, 4, 8, 6, 9, 3, 5)
 
-x <- matrix(rnorm(12), nrow=2)
+
+sumrank<-(rank(x3)+rank(x4))
+
+rank(sumrank)
+
+x1 <- c(3, 1, 4, 15, 1,92,4)
+x2 <- c(3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5)
 
 
-## plot
-par(mfrow=c(1,2))
+(r1 <- rank(x1))
 
-plot(x[1,], x[2,],col.lab = "thistle")
+names(x2) <- letters[1:11]
+(r2 <- rank(x2)) # ties are averaged
 
-#title(main = "The Minimum of Euclidean Distaces" ,  xlab = "GGAGOG", ylab = "SGGSGGGG")
+## rank() is "idempotent": rank(rank(x)) == rank(x) :
+stopifnot(rank(r1) == r1, rank(r2) == r2)
 
-abline(0,1)
+## ranks without averaging
+r.first<-rank(x2, ties.method= "first")  # first occurrence wins
+r.random1<-rank(x2, ties.method= "random") # ties broken at random
 
-plot(x[1,], x[2,],col.lab = "thistle")
+r.random2<-rank(x2, ties.method= "random") # and again
+r.average<-rank(x2, ties.method= "average") # and again
 
-title(main = "The Maximum of Euclidean Distaces" ,  xlab = "GGAGOG", ylab = "SGGSGGGG")
 
-abline(0,1)
-
-par(mfrow=c(1,1))
+## keep ties ties, no average
+(rma <- rank(x2, ties.method= "max"))  # as used classically
+(rmi <- rank(x2, ties.method= "min"))  # as in Sports
+stopifnot(rma + rmi == round(r2 + r2))

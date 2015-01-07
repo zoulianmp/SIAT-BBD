@@ -1,3 +1,12 @@
+# *************课堂作业***********************************
+#
+# 邹炼 ，医工所微创中心，工号：XJY102908
+# lian.zou@siat.ac.cn
+#
+#**********************************************************
+
+
+
 source("./zoulianfuncs/minmaxEuclideanDistance.R")
 
 egDataMatrix <- read.csv(file="class-matrix-GSE10810.csv")

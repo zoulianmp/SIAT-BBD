@@ -1,0 +1,4 @@
+.R*
+*.gz
+/GSE10810 DataSet/*
+/GSE10810 DataSet/
