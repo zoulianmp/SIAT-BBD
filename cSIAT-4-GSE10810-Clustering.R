@@ -112,14 +112,70 @@ png("tTest_histogram.png",
 hist(resultMatrix[,2], col="gray", labels=TRUE, border="black", breaks=10);
 
 dev.off()
+
 # Names of the top 5 ranked features
 egTopFeatures <- names(sort(resultMatrix[indexTopRank, 2]));
 
+
+png("tTest_Top1-2.png",        
+    width = 7*300,        # 7 x 300 pixels
+    height = 8*300,
+    res = 300,            # 300 pixels per inch
+    pointsize = 8)        # smaller font size
+
 heatmap.2(as.matrix(egSmallMatrix[egTopFeatures[1:2],]), ColSideColors=colorCol, col=redgreen(75), scale="none", key=TRUE, symkey=FALSE, density.info="none", trace="none", cexRow=1, cexCol=1);
+
+dev.off()
+
+
+
+png("tTest_Top2-3.png",        
+    width = 7*300,        # 7 x 300 pixels
+    height = 8*300,
+    res = 300,            # 300 pixels per inch
+    pointsize = 8)        # smaller font size
+
 heatmap.2(as.matrix(egSmallMatrix[egTopFeatures[2:3],]), ColSideColors=colorCol, col=redgreen(75), scale="none", key=TRUE, symkey=FALSE, density.info="none", trace="none", cexRow=1, cexCol=1);
+dev.off()
+
+
+png("tTest_Top3-4.png",        
+    width = 7*300,        # 7 x 300 pixels
+    height = 8*300,
+    res = 300,            # 300 pixels per inch
+    pointsize = 8)        # smaller font size
+
 heatmap.2(as.matrix(egSmallMatrix[egTopFeatures[3:4],]), ColSideColors=colorCol, col=redgreen(75), scale="none", key=TRUE, symkey=FALSE, density.info="none", trace="none", cexRow=1, cexCol=1);
+dev.off()
+
+
+
+png("tTest_Top4-5.png",        
+    width = 7*300,        # 7 x 300 pixels
+    height = 8*300,
+    res = 300,            # 300 pixels per inch
+    pointsize = 8)        # smaller font size
+
 heatmap.2(as.matrix(egSmallMatrix[egTopFeatures[4:5],]), ColSideColors=colorCol, col=redgreen(75), scale="none", key=TRUE, symkey=FALSE, density.info="none", trace="none", cexRow=1, cexCol=1);
+dev.off()
+
+
+png("tTest_Top1-5.png",        
+    width = 7*300,        # 7 x 300 pixels
+    height = 8*300,
+    res = 300,            # 300 pixels per inch
+    pointsize = 8)        # smaller font size
+
 heatmap.2(as.matrix(egSmallMatrix[egTopFeatures[1:5],]), ColSideColors=colorCol, col=redgreen(75), scale="none", key=TRUE, symkey=FALSE, density.info="none", trace="none", cexRow=1, cexCol=1);
+dev.off()
+
+
+
+png("egTopFeatures1-4.png",        
+    width = 7*300,        # 7 x 300 pixels
+    height = 8*300,
+    res = 300,            # 300 pixels per inch
+    pointsize = 8)        # smaller font size
 
 par(mfrow=c(2,2));
 plot(as.numeric(egSmallMatrix[egTopFeatures[1],]), as.numeric(egSmallMatrix[egTopFeatures[2],]), col=colorCol);
@@ -128,20 +184,51 @@ plot(as.numeric(egSmallMatrix[egTopFeatures[3],]), as.numeric(egSmallMatrix[egTo
 plot(as.numeric(egSmallMatrix[egTopFeatures[4],]), as.numeric(egSmallMatrix[egTopFeatures[5],]), col=colorCol);
 par(mfrow=c(1,1));
 
+dev.off()
+
+
+
 # TODO: hclust, kmeans, Density-based, etc
 
 egMatrixGood <- egSmallMatrix[egTopFeatures[3:4],];
 egMatrixBad  <- egSmallMatrix[egTopFeatures[4:5],];
+
+
+
+png("egMatrix Good-Bad.png",        
+    width = 7*300,        # 7 x 300 pixels
+    height = 8*300,
+    res = 300,            # 300 pixels per inch
+    pointsize = 8)        # smaller font size
+
+
 
 par(mfrow=c(1,2));
 plot(as.numeric(egMatrixGood[1,]), as.numeric(egMatrixGood[2,]), col=colorCol);
 plot(as.numeric(egMatrixBad[1,]), as.numeric(egMatrixBad[2,]), col=colorCol);
 par(mfrow=c(1,1));
 
+dev.off()
+
+
+
+
+
+
+
+
 # Hierarchical clustering
 ## egMatrixGood
 library(ape);
 egClusterH <- hclust(dist(t(egMatrixGood)));
+
+png("Matrix Good HCluster.png",        
+    width = 7*300,        # 7 x 300 pixels
+    height = 8*300,
+    res = 300,            # 300 pixels per inch
+    pointsize = 8)        # smaller font size
+
+
 parRawMargin <- par("mar");
 # bottom, left, top and right margins
 par(mar=c(1.2, 2.0, 1.2, 2.0));
@@ -149,6 +236,18 @@ par(mfrow=c(1,2));
 plot(egClusterH, main="MatrixGood, HCluster");
 plot(as.phylo(egClusterH), tip.color=colorCol, main="MatrixGood, HCluster with Color");
 par(mfrow=c(1,1));
+
+dev.off()
+
+
+
+
+png("Matrix Good HCluster-cut2.png",        
+    width = 7*300,        # 7 x 300 pixels
+    height = 8*300,
+    res = 300,            # 300 pixels per inch
+    pointsize = 8)        # smaller font size
+
 par(mar=parRawMargin);
 
 egClusterH2 <- cutree(egClusterH, 2);
@@ -164,6 +263,16 @@ par(mfrow=c(1,2));
 plot(as.numeric(egMatrixGood[1,]), as.numeric(egMatrixGood[2,]), col=colorCol, main="Original annotation" );
 plot(as.numeric(egMatrixGood[1,]), as.numeric(egMatrixGood[2,]), col=colorCluster, main="Hierarchical clustering (2)" );
 par(mfrow=c(1,1));
+
+dev.off()
+
+
+png("Matrix Good HCluster-cut3.png",        
+    width = 7*300,        # 7 x 300 pixels
+    height = 8*300,
+    res = 300,            # 300 pixels per inch
+    pointsize = 8)        # smaller font size
+
 
 egClusterH3 <- cutree(egClusterH, 3);
 mapClusterColor <- function(tempClass)
@@ -181,10 +290,19 @@ plot(as.numeric(egMatrixGood[1,]), as.numeric(egMatrixGood[2,]), col=colorCol, m
 plot(as.numeric(egMatrixGood[1,]), as.numeric(egMatrixGood[2,]), col=colorCluster, main="Hierarchical clustering (3)" );
 par(mfrow=c(1,1));
 
-
+dev.off()
 
 ## egMatrixBad
 egClusterH <- hclust(dist(t(egMatrixBad)));
+
+
+png("Matrix Bad HCluster.png",        
+    width = 7*300,        # 7 x 300 pixels
+    height = 8*300,
+    res = 300,            # 300 pixels per inch
+    pointsize = 8)        # smaller font size
+
+
 parRawMargin <- par("mar");
 # bottom, left, top and right margins
 par(mar=c(1.2, 2.0, 1.2, 2.0));
@@ -193,6 +311,8 @@ plot(egClusterH, main="MatrixBad, HCluster");
 plot(as.phylo(egClusterH), tip.color=colorCol, main="MatrixBad, HCluster with Color");
 par(mfrow=c(1,1));
 par(mar=parRawMargin);
+
+dev.off()
 
 
 # Kmeans
@@ -212,10 +332,22 @@ mapClusterColor <- function(tempClass)
         'blue';
 }
 colorCluster <- unlist(lapply(egMatrixGoodK[,3], mapClusterColor));
+
+
+png("Matrix Good K-Means-2.png",        
+    width = 7*300,        # 7 x 300 pixels
+    height = 8*300,
+    res = 300,            # 300 pixels per inch
+    pointsize = 8)        # smaller font size
+
 par(mfrow=c(1,2));
 plot(as.numeric(egMatrixGoodK[,1]), as.numeric(egMatrixGoodK[,2]), col=colorCol, main="Original annotation" );
 plot(as.numeric(egMatrixGoodK[,1]), as.numeric(egMatrixGoodK[,2]), col=colorCluster, main="Kmeans clustering (2)" );
 par(mfrow=c(1,1));
+
+dev.off()
+
+
 
 # 3 clusters
 tMatrix <- t(egMatrixGood);
@@ -235,10 +367,20 @@ mapClusterColor <- function(tempClass)
         'blue';
 }
 colorCluster <- unlist(lapply(egMatrixGoodK[,3], mapClusterColor));
+
+png("Matrix Good K-Means-3.png",        
+    width = 7*300,        # 7 x 300 pixels
+    height = 8*300,
+    res = 300,            # 300 pixels per inch
+    pointsize = 8)        # smaller font size
+
+
 par(mfrow=c(1,2));
 plot(as.numeric(egMatrixGoodK[,1]), as.numeric(egMatrixGoodK[,2]), col=colorCol, main="Original annotation" );
 plot(as.numeric(egMatrixGoodK[,1]), as.numeric(egMatrixGoodK[,2]), col=colorCluster, main="Kmeans clustering (3)" );
 par(mfrow=c(1,1));
+
+dev.off()
 
 
 # Model based clustering
@@ -263,7 +405,18 @@ tMatrixMCust <- Mclust(tMatrix);
 # "VVV": ellipsoidal, varying volume, shape, and orientation  
 
 # Plotting the BIC values, and the larger BIC the better
+png("Matrix Good MClust-BIC.png",        
+    width = 7*300,        # 7 x 300 pixels
+    height = 8*300,
+    res = 300,            # 300 pixels per inch
+    pointsize = 8)        # smaller font size
+
+
 plot(tMatrixMCust, data=tMatrix, what="BIC")
+
+dev.off()
+
+
 # EII(2) is the best model
 # The clustering vector:
 
@@ -279,10 +432,19 @@ mapClusterColor <- function(tempClass)
         'blue';
 }
 colorCluster <- unlist(lapply(egMatrixGoodK[,3], mapClusterColor));
+
+png("Matrix Good MClust-EII(2).png",        
+    width = 7*300,        # 7 x 300 pixels
+    height = 8*300,
+    res = 300,            # 300 pixels per inch
+    pointsize = 8)        # smaller font size
+
 par(mfrow=c(1,2));
 plot(as.numeric(egMatrixGoodK[,1]), as.numeric(egMatrixGoodK[,2]), col=colorCol, main="Original annotation" );
 plot(as.numeric(egMatrixGoodK[,1]), as.numeric(egMatrixGoodK[,2]), col=colorCluster, main="Model-based clustering (2)" );
 par(mfrow=c(1,1));
+
+dev.off()
 
 
 # DBSCAN
@@ -304,8 +466,17 @@ mapClusterColor <- function(tempClass)
         'green';
 }
 colorCluster <- unlist(lapply(egMatrixGoodK[,3], mapClusterColor));
+
+
+png("Matrix Good MClust-DBSCAN.png",        
+    width = 7*300,        # 7 x 300 pixels
+    height = 8*300,
+    res = 300,            # 300 pixels per inch
+    pointsize = 8)        # smaller font size
+
+
 par(mfrow=c(1,2));
 plot(as.numeric(egMatrixGoodK[,1]), as.numeric(egMatrixGoodK[,2]), col=colorCol, main="Original annotation" );
 plot(as.numeric(egMatrixGoodK[,1]), as.numeric(egMatrixGoodK[,2]), col=colorCluster, main="Model-based clustering (3)" );
 par(mfrow=c(1,1));
-
+dev.off()
