@@ -31,8 +31,8 @@ memory.limit(12000);
 set.seed(0);
 
 # Initialization: loading the dataset
-egMatrix <- read.csv("class-matrix-GSE32175.csv", header=TRUE, sep=",", row.names=1);
-egClass <- read.csv("class-GSE32175-binary.csv", header=TRUE, sep=",", row.names=1);
+egMatrix <- read.csv("class-matrix-GSE10810.csv", header=TRUE, sep=",", row.names=1);
+egClass <- read.csv("class-GSE10810-binary.csv", header=TRUE, sep=",", row.names=1);
 indexP <- which(egClass$Class == "P");
 indexN <- which(egClass$Class == "N");
 
@@ -80,6 +80,9 @@ color.map <- function(tempClass)
     'blue';
 }
 colorCol <- unlist(lapply(egClass$Class, color.map));
+
+#Get the Top x distinguish data, Feature Gene Ids 
+
 egRank <- rank(rank(resultMatrix[,2]));
 indexTopOneKRank <- which ( egRank<=1000 );
 indexTopRank <- which ( egRank==1 )[1];
@@ -92,8 +95,16 @@ egValue3 <- as.numeric(egMatrix[indexRank3,]);
 egValue5 <- as.numeric(egMatrix[indexRank5,]);
 egValue7 <- as.numeric(egMatrix[indexRank7,]);
 
+
+
+
 # Names of the top 5 ranked features
-egTopFeatures <- names(sort(resultMatrix[indexTopRank, 2]));
+
+
+
+egTopFeatures <- dataRowNames[indexTopRank];
+
+
 egTopClass <- as.numeric(egSmallMatrix[indexTopRank,]);
 egMatrix <- egSmallMatrix[-indexTopRank,];
 
@@ -193,13 +204,21 @@ par(mfrow=c(1,1));
 
 
 # Regression to the TopOne features
+
+
+
+
+
 egSelf <- egTopClass;
 tSampleNames <- colnames(egTopOneKMatrix);
 tFeatureNames <- rownames(egTopOneKMatrix);
 tcFeatureNames <- paste("PS", tFeatureNames, sep="");
 rownames(egTopOneKMatrix) <- tcFeatureNames;
 egListMatrix <- as.data.frame(t(egTopOneKMatrix));
-tVariable <- paste("PS", "236431_at", sep="");
+
+#set the top feature 
+
+tVariable <- paste("PS", egTopFeatures, sep="");
 # gFitLinear <- lm(PS236431_at~., data=egListMatrix);
 egFitLinear <- lm(eval(as.name(tVariable))~., data=egListMatrix);
 indexNA <- which ( egFitLinear$coefficients != "NA" );

@@ -1,4 +1,15 @@
 
+library(gplots);
+par(mfrow=c(3,1));
+
+for ( i in 1:3 )
+{
+  plot(ecdf(rnorm(10)));
+  plot(ecdf(rnorm(10)), add = TRUE, col = 2);
+}
+plot
+
+par(mfrow=c(1,1));
 
 x3 <- c(3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5)
 x4 <- c(3, 1, 3, 1, 5, 4, 8, 6, 9, 3, 5)
